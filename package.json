@@ -1,0 +1,20 @@
+{
+    "name": "demo",
+    "version": "0.0.0",
+    "author": "sxh",
+    "description": "前端的demo",
+    "keywords": [
+        "js",
+        "demo",
+        "分片上传"
+    ],
+    "scripts": {
+        "start": "node index.js"
+    },
+    "dependencies": {
+
+    },
+    "devDependencies": {
+
+    }
+}
