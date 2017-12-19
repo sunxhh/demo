@@ -2,10 +2,6 @@ let slice = function(arg) {
     return [].slice.apply(arg);
 }
 
-let print = function(txt) {
-    console.log(txt);
-}
-
 // 扩展对象
 let copy = function(target, source) {
     var arg = slice(arguments);
@@ -17,6 +13,5 @@ let copy = function(target, source) {
 
 module.exports = {
     slice: slice,
-    print: print,
     copy: copy
 }

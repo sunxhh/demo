@@ -10,6 +10,7 @@ class connect {
         let index = 0;
         let stack = this.stack;
         let data = this.data;
+        let self = this;
 
         function next() {
             if (index >= stack.length) {
@@ -17,7 +18,7 @@ class connect {
             }
             let curFn = stack[index];
             index++;
-            curFn(next, data);
+            curFn(next, data, self);
         }
         next();
     }
