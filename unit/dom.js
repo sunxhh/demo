@@ -1,9 +1,8 @@
-var __dom = (function() {
-    return {
-        getDom: function(str) {
-            return document.querySelector(str);
-        }
+let dom = {
+    getDom: function(str) {
+        return document.querySelector(str);
     }
-})();
+}
 
-dominate.dom = __dom;
+
+module.exports = dom;

@@ -1,29 +1,22 @@
-var dominate = {
-    slice: function(arg) {
-        return [].slice.apply(arg);
-    },
-    print: function(txt) {
-        console.log(txt);
-    },
-    isArray: function(value) {
-        if (value instanceof Array ||
-            (!(value instanceof Object) &&
-                (Object.prototype.toString.call((value)) == '[object Array]') ||
-                typeof value.length == 'number' &&
-                typeof value.splice != 'undefined' &&
-                typeof value.propertyIsEnumerable != 'undefined' &&
-                !value.propertyIsEnumerable('splice'))) {
-            return true;
-        }
-        return false;
-    }
-};
+let slice = function(arg) {
+    return [].slice.apply(arg);
+}
+
+let print = function(txt) {
+    console.log(txt);
+}
 
 // 扩展对象
-dominate.copy = function(target, source) {
-    var arg = dominate.slice(arguments);
+let copy = function(target, source) {
+    var arg = slice(arguments);
     if (!source) {
         arg.splice(0, 0, dominate);
     }
-    Object.assign.apply(this, arg);
+    return Object.assign.apply(Object, arg);
+}
+
+module.exports = {
+    slice: slice,
+    print: print,
+    copy: copy
 }
