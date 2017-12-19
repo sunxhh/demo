@@ -9,12 +9,14 @@
         "分片上传"
     ],
     "scripts": {
-        "start": "node index.js"
+        "start": "webpack --config webpack.config.js"
     },
-    "dependencies": {
-
-    },
+    "dependencies": {},
     "devDependencies": {
-
+        "css-loader": "^0.28.7",
+        "style-loader": "^0.19.1",
+        "stylus": "^0.54.5",
+        "stylus-loader": "^3.0.1",
+        "webpack": "^3.10.0"
     }
 }

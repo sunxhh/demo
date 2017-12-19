@@ -1,4 +1,4 @@
-let print = function(txt) {
+let print = function (txt) {
     console.log(txt);
 }
 module.exports = {

@@ -11,7 +11,7 @@ let dominate = require('./common.js');
  */
 const bindedMap = new Map();
 
-let addMap = function(dom, type, fn) {
+let addMap = function (dom, type, fn) {
     let map = bindedMap.get(dom);
     if (!map) {
         map = {};
@@ -21,7 +21,7 @@ let addMap = function(dom, type, fn) {
     fnMap.set(fn, true);
 }
 
-let removeMap = function(dom, type, fn) {
+let removeMap = function (dom, type, fn) {
     let map = bindedMap.get(dom);
     if (!map) {
         return;
@@ -45,7 +45,7 @@ let removeMap = function(dom, type, fn) {
  * @param {*} type 
  * @param {*} fn 
  */
-let addEventOne = function(dom, type, fn) {
+let addEventOne = function (dom, type, fn) {
     var arg = dominate.slice(arguments);
     dom.addEventListener(type, fn, false);
     this.addMap.apply(arg);
@@ -57,7 +57,7 @@ let addEventOne = function(dom, type, fn) {
  * @param {*} type 
  * @param {*} fn 
  */
-let removeEventOne = function(dom, type, fn) {
+let removeEventOne = function (dom, type, fn) {
     if (fn) {
         dom.removeEventListener(type, fn);
         this.removeMap(dom, type, fn);
@@ -72,7 +72,7 @@ let removeEventOne = function(dom, type, fn) {
 /**
  * 绑定事件
  */
-let addEvent = function(dom, type, fn) {
+let addEvent = function (dom, type, fn) {
     var arg = dominate.slice(arguments);
     if (dominate.isArray(dom)) {
         for (let i = 0; i < dom.length; i++) {
@@ -86,7 +86,7 @@ let addEvent = function(dom, type, fn) {
 /**
  * 移除事件
  */
-let removeEvent = function(dom, type, fn) {
+let removeEvent = function (dom, type, fn) {
     var arg = dominate.slice(arguments);
     if (dominate.isArray(dom)) {
         for (let i = 0; i < dom.length; i++) {
