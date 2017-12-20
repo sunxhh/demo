@@ -44,7 +44,7 @@ let sendProcess = {
                     fail(getRes(xhr), xhr);
                 }
             }
-        }
+        };
 
         next();
     },

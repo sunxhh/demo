@@ -1,6 +1,10 @@
+require("../css/index.styl");
+
 let eventUnit = require("unit/event.js");
 let dom = require("unit/dom.js");
-require("../css/index.styl");
+import { handleFiles } from "./file.js";
+
+
 
 let bindDrop = function() {
     let div = dom.getDom("#drop_area");
@@ -16,7 +20,7 @@ let bindDrop = function() {
         e.stopPropagation();
         let dt = e.dataTransfer;
         let files = dt.files;
-        fileObj.handleFiles(files);
+        handleFiles(files);
     });
 
     /**
@@ -38,39 +42,8 @@ let bindDrop = function() {
     /**
      * 阻止浏览器默认打开文件
      */
-}
-let fileObj = {
-    handleFiles: function(files) {
-        for (let i = 0; i < files.length; i++) {
-            this.handleFile(files[i]);
-        }
-    },
-    handleFile: function(file) {
+};
 
-    },
-    fileUpload: function(file, url) {
-        let reader = new FileReader();
-        let xhr = new XMLHttpRequest();
-        // 过程
-        xhr.upload.addEventListener("progress", function(e) {
-            if (e.lengthComputable) {
-                let percentage = Math.round((e.loaded * 100) / e.total);
-
-            }
-        }, false);
-
-        // 完成
-        xhr.upload.addEventListener("load", function(e) {
-
-        }, false);
-        xhr.open("POST", url);
-        xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
-        reader.onload = function(evt) {
-            xhr.send(evt.target.result);
-        };
-        reader.readAsBinaryString(file);
-    }
-}
 let page = {
     init: function() {
         bindDrop();
