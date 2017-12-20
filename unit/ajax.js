@@ -12,6 +12,7 @@ let sendProcess = {
         process.use(this.setHeader);
         process.use(this.loadEvent);
         process.use(this.errorEvent);
+        process.use(this.processEvent);
     },
     // 设置header
     setHeader: function(next, data) {
@@ -57,11 +58,21 @@ let sendProcess = {
 
         xhr.onerror = function() {
             fail(getRes(xhr), xhr);
-        }
+        };
 
         next();
+    },
+    // 上传过程
+    processEvent: function(next, data) {
+        let req = data.req;
+        let xhr = data.xhr;
+
+        let process = req.process || function() {};
+        xhr.upload.addEventListener("progress", function(e) {
+            process(e, xhr);
+        }, false);
     }
-}
+};
 
 // 获取返回值
 let getRes = function(xhr) {
@@ -72,8 +83,21 @@ let getRes = function(xhr) {
 
     }
     return responseText;
-}
+};
 
+/**
+ * 发送ajax请求
+ * @param {*} data
+ * url  地址
+ * timeout 超时 默认10分钟
+ * async 请求同异步默认true
+ * data 请求参数
+ * success 请求成功 
+ * fail 请求失败
+ * method 请求类型
+ * process 请求过程
+ * headers 设置头部
+ */
 let sendAjax = function(data) {
     let xhr = new XMLHttpRequest();
     process.data.xhr = xhr;
@@ -83,6 +107,8 @@ let sendAjax = function(data) {
     xhr.timeout = data.timeout || timeout;
 
     process.handle();
+
+    xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
 
     xhr.send(data.data);
     return xhr;

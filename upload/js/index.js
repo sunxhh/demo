@@ -1,10 +1,9 @@
 require("../css/index.styl");
 
-let eventUnit = require("unit/event.js");
-let dom = require("unit/dom.js");
+let eventUnit = require("../../unit/event.js");
+let dom = require("../../unit/dom.js");
+
 import { handleFiles } from "./file.js";
-
-
 
 let bindDrop = function() {
     let div = dom.getDom("#drop_area");
