@@ -3,21 +3,30 @@
     "version": "0.0.0",
     "author": "sxh",
     "description": "前端的demo",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/sunxhh/demo.git"
+    },
     "keywords": [
         "js",
         "demo",
         "分片上传"
     ],
     "scripts": {
-        "start": "webpack --config webpack.config.js"
+        "dev": "webpack --config webpack.dev.js --watch"
     },
     "dependencies": {},
     "devDependencies": {
+        "clean-webpack-plugin": "^0.1.17",
         "css-loader": "^0.28.7",
+        "html-webpack-plugin": "^2.30.1",
         "jshint": "^2.9.5",
         "style-loader": "^0.19.1",
         "stylus": "^0.54.5",
         "stylus-loader": "^3.0.1",
-        "webpack": "^3.10.0"
+        "uglifyjs-webpack-plugin": "^1.1.4",
+        "webpack": "^3.10.0",
+        "webpack-merge": "^4.1.1"
     }
 }
