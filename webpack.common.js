@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
-        app: './src/index.js'
+        app: './upload/js/index.js'
     },
     output: {
         filename: '[name].bundle.js',
@@ -28,10 +28,16 @@ module.exports = {
             use: [
                 'style-loader',
                 'css-loader',
-                {
-                    loader: 'stylus-loader'
-                },
+                'stylus-loader'
             ],
         }]
+    },
+    resolve: {
+        // 可以忽略的文件类型
+        extensions: ['.js'],
+        // 别名
+        alias: {
+            unit: path.resolve(__dirname, './unit')
+        }
     }
 };

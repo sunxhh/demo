@@ -1,3 +1,4 @@
+let validate = require('./validate.js');
 let dominate = require('./common.js');
 /**
  * 存储已绑定的map
@@ -62,7 +63,7 @@ let removeEventOne = function(dom, type, fn) {
         dom.removeEventListener(type, fn);
         removeMap(dom, type, fn);
     } else {
-        for (let key of map.keys()) {
+        for (let key of bindedMap.keys()) {
             dom.removeEventListener(type, key);
         }
         removeMap(dom, type);
@@ -74,7 +75,7 @@ let removeEventOne = function(dom, type, fn) {
  */
 let addEvent = function(dom, type, fn) {
     let arg = dominate.slice(arguments);
-    if (dominate.isArray(dom)) {
+    if (validate.isArray(dom)) {
         for (let i = 0; i < dom.length; i++) {
             addEventOne(dom[i], type, fn);
         }
@@ -88,7 +89,7 @@ let addEvent = function(dom, type, fn) {
  */
 let removeEvent = function(dom, type, fn) {
     let arg = dominate.slice(arguments);
-    if (dominate.isArray(dom)) {
+    if (validate.isArray(dom)) {
         for (let i = 0; i < dom.length; i++) {
             removeEventOne(dom[i], type, fn);
         }

@@ -1,5 +1,6 @@
-let eventUnit = require("../../unit/eventUnit");
-let dom = require("../../unit/dom");
+let eventUnit = require("unit/event.js");
+let dom = require("unit/dom.js");
+require("../css/index.styl");
 
 let bindDrop = function() {
     let div = dom.getDom("#drop_area");
