@@ -22,6 +22,6 @@ module.exports = {
                     loader: 'stylus-loader'
                 },
             ],
-        }],
+        }]
     }
 };

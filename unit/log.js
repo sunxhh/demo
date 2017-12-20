@@ -1,6 +1,6 @@
-let print = function (txt) {
+let printf = function(txt) {
     console.log(txt);
 }
 module.exports = {
-    print: print
+    print: printf
 }

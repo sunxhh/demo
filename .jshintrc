@@ -1,0 +1,9 @@
+{
+    "undef": true,
+    "unused": true,
+    "predef": [],
+    "esversion": 6,
+    "varstmt": true,
+    "browser": true,
+    "node": true
+}

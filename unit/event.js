@@ -11,7 +11,7 @@ let dominate = require('./common.js');
  */
 const bindedMap = new Map();
 
-let addMap = function (dom, type, fn) {
+let addMap = function(dom, type, fn) {
     let map = bindedMap.get(dom);
     if (!map) {
         map = {};
@@ -21,7 +21,7 @@ let addMap = function (dom, type, fn) {
     fnMap.set(fn, true);
 }
 
-let removeMap = function (dom, type, fn) {
+let removeMap = function(dom, type, fn) {
     let map = bindedMap.get(dom);
     if (!map) {
         return;
@@ -45,10 +45,10 @@ let removeMap = function (dom, type, fn) {
  * @param {*} type 
  * @param {*} fn 
  */
-let addEventOne = function (dom, type, fn) {
-    var arg = dominate.slice(arguments);
+let addEventOne = function(dom, type, fn) {
+    let arg = dominate.slice(arguments);
     dom.addEventListener(type, fn, false);
-    this.addMap.apply(arg);
+    addMap.apply(arg);
 }
 
 /**
@@ -57,43 +57,43 @@ let addEventOne = function (dom, type, fn) {
  * @param {*} type 
  * @param {*} fn 
  */
-let removeEventOne = function (dom, type, fn) {
+let removeEventOne = function(dom, type, fn) {
     if (fn) {
         dom.removeEventListener(type, fn);
-        this.removeMap(dom, type, fn);
+        removeMap(dom, type, fn);
     } else {
         for (let key of map.keys()) {
             dom.removeEventListener(type, key);
         }
-        this.removeMap(dom, type);
+        removeMap(dom, type);
     }
 }
 
 /**
  * 绑定事件
  */
-let addEvent = function (dom, type, fn) {
-    var arg = dominate.slice(arguments);
+let addEvent = function(dom, type, fn) {
+    let arg = dominate.slice(arguments);
     if (dominate.isArray(dom)) {
         for (let i = 0; i < dom.length; i++) {
-            this.addEventOne(dom[i], type, fn);
+            addEventOne(dom[i], type, fn);
         }
     } else {
-        this.addEventOne.apply(this, arg);
+        addEventOne.apply(this, arg);
     }
 }
 
 /**
  * 移除事件
  */
-let removeEvent = function (dom, type, fn) {
-    var arg = dominate.slice(arguments);
+let removeEvent = function(dom, type, fn) {
+    let arg = dominate.slice(arguments);
     if (dominate.isArray(dom)) {
         for (let i = 0; i < dom.length; i++) {
-            this.removeEventOne(dom[i], type, fn);
+            removeEventOne(dom[i], type, fn);
         }
     } else {
-        this.removeEventOne.apply(this, arg);
+        removeEventOne.apply(this, arg);
     }
 }
 

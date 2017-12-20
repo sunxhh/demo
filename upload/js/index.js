@@ -1,43 +1,46 @@
-var bindDrop = function() {
-    var div = dominate.dom.getDom("#drop_area");
-    dominate.event.addEvent(div, "dragenter", function(e) {
+let event = require("../../unit/event");
+let dom = require("../../unit/dom");
+
+let bindDrop = function() {
+    let div = dom.getDom("#drop_area");
+    event.addEvent(div, "dragenter", function(e) {
         this.style.border = "1px solid #333";
     });
-    dominate.event.addEvent(div, "dragleave", function(e) {
+    event.addEvent(div, "dragleave", function(e) {
         this.style.border = "1px dashed #dbdbdb";
     });
 
-    dominate.event.addEvent(div, "drop", function(e) {
+    event.addEvent(div, "drop", function(e) {
         e.preventDefault();
         e.stopPropagation();
-        var dt = e.dataTransfer;
-        var files = dt.files;
+        let dt = e.dataTransfer;
+        let files = dt.files;
         fileObj.handleFiles(files);
     });
 
     /**
      * 阻止浏览器默认打开文件
      */
-    dominate.event.addEvent(document, "dragenter", function(e) {
+    event.addEvent(document, "dragenter", function(e) {
         e.preventDefault();
     });
-    dominate.event.addEvent(document, "dragleave", function(e) {
+    event.addEvent(document, "dragleave", function(e) {
         e.preventDefault();
     });
 
-    dominate.event.addEvent(document, "drop", function(e) {
+    event.addEvent(document, "drop", function(e) {
         e.preventDefault();
     });
-    dominate.event.addEvent(document, "dragover", function(e) {
+    event.addEvent(document, "dragover", function(e) {
         e.preventDefault();
     });
     /**
      * 阻止浏览器默认打开文件
      */
 }
-var fileObj = {
+let fileObj = {
     handleFiles: function(files) {
-        for (var i = 0; i < files.length; i++) {
+        for (let i = 0; i < files.length; i++) {
             this.handleFile(files[i]);
         }
     },
@@ -45,12 +48,12 @@ var fileObj = {
 
     },
     fileUpload: function(file, url) {
-        var reader = new FileReader();
-        var xhr = new XMLHttpRequest();
+        let reader = new FileReader();
+        let xhr = new XMLHttpRequest();
         // 过程
         xhr.upload.addEventListener("progress", function(e) {
             if (e.lengthComputable) {
-                var percentage = Math.round((e.loaded * 100) / e.total);
+                let percentage = Math.round((e.loaded * 100) / e.total);
 
             }
         }, false);
@@ -67,7 +70,7 @@ var fileObj = {
         reader.readAsBinaryString(file);
     }
 }
-var page = {
+let page = {
     init: function() {
         bindDrop();
     }
