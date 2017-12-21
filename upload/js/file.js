@@ -1,7 +1,7 @@
 const sendAjax = require("../../unit/ajax").sendAjax;
 
-const pieceSize = 1024 * 1024;
-let uploadFile = function(fileBinaryString) {
+const pieceSize = 1024 * 1024 * 1000;
+let uploadFile = function(fileBinaryString, file) {
     let index = 0;
     let curBinaryString;
     let failCount = 0;
@@ -15,12 +15,12 @@ let uploadFile = function(fileBinaryString) {
             curBinaryString = fileBinaryString.slice(curIndex, (curIndex + pieceSize));
         }
         let fd = new FormData();
-        fd.append('file', curBinaryString);
+        fd.append('file', file);
         fd.append('fileName', 'fileName');
         fd.append('index', index);
         sendAjax({
             method: "post",
-            url: "http://train.t.17usoft.com/trainskyzenapi/views/insertSkyFile",
+            url: "http://localhost:3000/upload/uploadFile",
             data: fd,
             success: function(data) {
                 console.log(data);
@@ -28,7 +28,7 @@ let uploadFile = function(fileBinaryString) {
                     index++;
                     failCount = 0;
                     upload();
-                    return ;
+                    return;
                 }
 
             },
@@ -52,7 +52,7 @@ let uploadFile = function(fileBinaryString) {
 let readerFile = function(file, fn) {
     let reader = new FileReader();
     reader.onload = function(evt) {
-        fn(evt.target.result);
+        fn(evt.target.result, file);
     };
     reader.readAsBinaryString(file);
 };

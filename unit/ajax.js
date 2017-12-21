@@ -13,15 +13,21 @@ let sendProcess = {
         process.use(this.loadEvent);
         process.use(this.errorEvent);
         process.use(this.processEvent);
+        process.use(this.setSendData);
     },
     // 设置header
     setHeader: function(next, data) {
         let req = data.req;
         let xhr = data.xhr;
-
+        let defaultContentType = 'application/x-www-form-urlencoded';
         let headers = req.headers;
+
+        if (!headers || !headers["content-type"]) {
+            xhr.setRequestHeader('content-type', defaultContentType);
+        }
+
         if (headers) {
-            for (let key of headers) {
+            for (let key in headers) {
                 xhr.setRequestHeader(key, headers[key]);
             }
         }
@@ -71,6 +77,24 @@ let sendProcess = {
         xhr.upload.addEventListener("progress", function(e) {
             process(e, xhr);
         }, false);
+        next();
+    },
+    // 设置传值
+    setSendData: function(next, data) {
+        let req = data.req;
+        let oData = req.data;
+        let sendData = "";
+        if (oData instanceof FormData) {
+            sendData = oData;
+        } else {
+            for (let key in oData) {
+                sendData += key + '=' + oData[key] + '&'
+            }
+            sendData = sendData.slice(0, -1);
+        }
+        req.sendData = sendData;
+        console.log(sendData);
+        next();
     }
 };
 
@@ -102,15 +126,15 @@ let sendAjax = function(data) {
     let xhr = new XMLHttpRequest();
     process.data.xhr = xhr;
     process.data.req = data;
-
     xhr.open(data.method.toLocaleUpperCase(), data.url, data.async === false ? data.async : async);
+
     xhr.timeout = data.timeout || timeout;
 
     process.handle();
 
     xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
 
-    xhr.send(data.data);
+    xhr.send(data.sendData);
     return xhr;
 }
 
