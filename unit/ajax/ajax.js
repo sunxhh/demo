@@ -1,4 +1,5 @@
-let connect = require("./connect");
+let connect = require("../connect");
+let handleSendData = require("./ajaxData");
 let process = new connect();
 
 // 超时时间
@@ -22,15 +23,15 @@ let sendProcess = {
         let defaultContentType = 'application/x-www-form-urlencoded';
         let headers = req.headers;
 
-        if (!headers || !headers["content-type"]) {
-            xhr.setRequestHeader('content-type', defaultContentType);
+        if (!headers) {
+            req.headers = headers = {};
         }
-
-        if (headers) {
-            for (let key in headers) {
-                xhr.setRequestHeader(key, headers[key]);
-            }
+        if (!headers["content-type"]) {
+            headers["content-type"] = defaultContentType;
         }
+        Object.keys(headers).forEach((key) => {
+            xhr.setRequestHeader(key, headers[key]);
+        });
         next();
     },
     // 设置返回事件
@@ -81,19 +82,7 @@ let sendProcess = {
     },
     // 设置传值
     setSendData: function(next, data) {
-        let req = data.req;
-        let oData = req.data;
-        let sendData = "";
-        if (oData instanceof FormData) {
-            sendData = oData;
-        } else {
-            for (let key in oData) {
-                sendData += key + '=' + oData[key] + '&'
-            }
-            sendData = sendData.slice(0, -1);
-        }
-        req.sendData = sendData;
-        console.log(sendData);
+        handleSendData(data);
         next();
     }
 };
@@ -133,10 +122,10 @@ let sendAjax = function(data) {
     process.handle();
 
     xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
-
+    console.log(data.sendData);
     xhr.send(data.sendData);
     return xhr;
-}
+};
 
 sendProcess.init();
 
