@@ -13,7 +13,7 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
-            template: './upload/index.html'
+            template: './text/index.html'
         })
     ],
     module: {

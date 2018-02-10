@@ -1,11 +1,12 @@
-const sendAjax = require("../../unit/ajax").sendAjax;
+const sendAjax = require("../../unit/ajax/ajax").sendAjax;
 
-const pieceSize = 1024 * 1024 * 1000;
-let uploadFile = function(fileBinaryString, file) {
+const pieceSize = 100;
+let uploadFile = function (fileBinaryString, file) {
     let index = 0;
     let curBinaryString;
     let failCount = 0;
     let maxFailCount = 5;
+    console.log(fileBinaryString.length);
 
     function upload() {
         let curIndex = index * pieceSize;
@@ -15,14 +16,17 @@ let uploadFile = function(fileBinaryString, file) {
             curBinaryString = fileBinaryString.slice(curIndex, (curIndex + pieceSize));
         }
         let fd = new FormData();
-        fd.append('file', file);
+        fd.append('file', curBinaryString);
         fd.append('fileName', 'fileName');
         fd.append('index', index);
         sendAjax({
             method: "post",
+            headers: {
+                'content-type': "multipart/form-data"
+            },
             url: "http://localhost:3000/upload/uploadFile",
             data: fd,
-            success: function(data) {
+            success: function (data) {
                 console.log(data);
                 if ((curIndex + pieceSize) <= fileBinaryString.length) {
                     index++;
@@ -32,7 +36,7 @@ let uploadFile = function(fileBinaryString, file) {
                 }
 
             },
-            fail: function(data) {
+            fail: function (data) {
                 console.log(data);
                 failCount++;
                 if (failCount >= maxFailCount) {
@@ -40,7 +44,7 @@ let uploadFile = function(fileBinaryString, file) {
                 }
                 upload();
             },
-            process: function(e) {
+            process: function (e) {
                 console.log(e);
             }
         });
@@ -49,19 +53,21 @@ let uploadFile = function(fileBinaryString, file) {
 };
 
 // 读取文件
-let readerFile = function(file, fn) {
+let readerFile = function (file, fn) {
     let reader = new FileReader();
-    reader.onload = function(evt) {
+    reader.onload = function (evt) {
         fn(evt.target.result, file);
     };
     reader.readAsBinaryString(file);
 };
 
 // 处理文件
-let handleFiles = function(files) {
+let handleFiles = function (files) {
     for (let i = 0; i < files.length; i++) {
         readerFile(files[i], uploadFile);
     }
 };
 
-export { handleFiles };
+export {
+    handleFiles
+};

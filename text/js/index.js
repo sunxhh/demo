@@ -5,10 +5,10 @@ let sendAjax = require("../../unit/ajax/ajax.js").sendAjax;
 sendAjax({
     url: "http://localhost:3000/test/test1",
     data: {
-        test: "啊啊啊啊",
+        test: "&=啊啊啊啊",
         "chexkout": "checkout"
     },
-    success: function(res) {
+    success: function (res) {
         // console.log(res);
     },
     method: "post"
@@ -19,9 +19,9 @@ sendAjax({
 //     type: "post",
 //     dataType: "json",
 //     data: {
-//         userID: "1",
+//         userID: "&nbsp;",
 //         b: "2"
 //     },
-//     success: function(response) {},
-//     error: function() {}
+//     success: function (response) {},
+//     error: function () {}
 // });

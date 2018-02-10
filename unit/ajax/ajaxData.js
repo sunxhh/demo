@@ -8,7 +8,7 @@ function setUrlencodedData(data) {
         sendData = oData;
     } else {
         for (let key in oData) {
-            sendData += encodeURI(key) + '=' + encodeURI(oData[key]) + '&';
+            sendData += encodeURIComponent(key) + '=' + encodeURIComponent(oData[key]) + '&';
         }
         sendData = sendData.slice(0, -1);
     }
