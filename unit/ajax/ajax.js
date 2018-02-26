@@ -1,5 +1,5 @@
 let connect = require("../connect");
-let handleSendData = require("./ajaxData");
+let handleSendData = require("./ajaxData").setData;
 let process = new connect();
 
 // 超时时间
@@ -10,6 +10,7 @@ const async = true;
 // 发送请求前的配置
 let sendProcess = {
     init: function() {
+        // 初始化需要处理的部分
         process.use(this.setHeader);
         process.use(this.loadEvent);
         process.use(this.errorEvent);

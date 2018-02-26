@@ -1,7 +1,6 @@
 // 设置urlencode传值
 function setUrlencodedData(data) {
-
-    let req = data.req;
+    let req = data.req || data;
     let oData = req.data;
     let sendData = "";
     if (oData instanceof FormData) {
@@ -33,4 +32,7 @@ function setData(data) {
 
 }
 
-module.exports = setData;
+module.exports = {
+    setData,
+    setUrlencodedData
+};
